@@ -1,2 +1,0 @@
-Window 800 600
-Font 
