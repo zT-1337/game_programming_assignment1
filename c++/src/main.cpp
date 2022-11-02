@@ -1,8 +1,11 @@
 #include <SFML/Graphics.hpp>
+#include "game.h"
 
 int main()
 {
-  sf::RenderWindow window(sf::VideoMode(200, 200), "SFML Works");
+  Game game("config.txt");
+  game.loop();
+  /*sf::RenderWindow window(sf::VideoMode(200, 200), "SFML Works");
   sf::CircleShape shape(100.0f);
   shape.setFillColor(sf::Color::Green);
 
@@ -19,7 +22,7 @@ int main()
     window.clear();
     window.draw(shape);
     window.display();
-  }
+  }*/
 
   return 0;
 }
