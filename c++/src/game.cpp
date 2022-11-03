@@ -71,6 +71,40 @@ void Game::checkObjectTypeIsExpected(const std::string & object_type, const std:
 void Game::createShapeObjects(std::ifstream & config_file)
 {
   m_movable_shapes = std::make_shared<std::vector<MovableShape>>();
+
+  std::string object_type;
+  while(config_file >> object_type)
+  {
+    if(object_type == "Rectangle")
+    {
+      m_movable_shapes->push_back(createRectangle(config_file));
+      continue;
+    }
+
+    std::cerr << "Unexpected object type " << object_type << std::endl;
+  }
+}
+
+MovableShape Game::createRectangle(std::ifstream & config_file)
+{
+  std::string name;
+  float init_pos_x, init_pos_y, init_speed_x, init_speed_y, width, height;
+  int red, blue, green;
+
+  config_file >> name 
+              >> init_pos_x >> init_pos_y 
+              >> init_speed_x >> init_speed_y 
+              >> red >> green >> blue 
+              >> width >> height;
+
+  CreateRect rect = { name, 
+                      init_pos_x, init_pos_y, 
+                      init_speed_x, init_speed_y, 
+                      red, green, blue, 
+                      width, height
+                    };
+
+  return MovableShape(rect);
 }
 
 Game::~Game()
@@ -86,9 +120,6 @@ void Game::loop()
   text.setCharacterSize(m_font_size);
   text.setFillColor(*m_font_color);
 
-  CreateRect rect = { .name = "KEKL", .red = 255, .green = 255, .blue = 255, .width = 250, .height = 100, };
-  MovableShape shape(rect);
-  
   while(m_window->isOpen())
   {
     sf::Event event;
@@ -101,7 +132,14 @@ void Game::loop()
     }
 
     m_window->clear();
-    m_window->draw(shape.getShape());
+
+    for(size_t i=0; i<m_movable_shapes->size();++i)
+    {
+      auto& movable_shape = (*m_movable_shapes)[i];
+      movable_shape.update();
+      m_window->draw(movable_shape.getShape());
+    }
+
     m_window->draw(text);
     m_window->display();
   }

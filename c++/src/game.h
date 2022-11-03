@@ -21,6 +21,7 @@ class Game
   void checkObjectTypeIsExpected(const std::string & object_type, const std::string & expected_type, std::ifstream & config_file);
 
   void createShapeObjects(std::ifstream & config_file);
+  MovableShape createRectangle(std::ifstream & config_file);
 
 public:
 

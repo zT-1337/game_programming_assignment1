@@ -1,2 +1,5 @@
 Window 800 600
 Font font.ttf 24 255 0 0
+Rectangle KEKL 0 0 0.5 0.5 255 0 0 250 100
+Rectangle KEKL 250 125 0.5 0.5 255 255 0 350 350
+Rectangle KEKL 400 234 0.5 0.5 255 125 125 500 5

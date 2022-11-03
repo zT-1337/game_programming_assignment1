@@ -30,5 +30,6 @@ class MovableShape
 public:
   MovableShape(const CreateRect & rect_data);
 
-  const sf::Shape & getShape();
+  const sf::Shape & getShape() const;
+  void update();
 };
