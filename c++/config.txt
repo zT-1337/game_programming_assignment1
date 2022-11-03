@@ -1,2 +1,2 @@
 Window 800 600
-Font font.ttf 24 255 255 255
+Font font.ttf 24 255 0 0

@@ -8,7 +8,6 @@ OBJ_DIR = obj
 BIN_DIR = bin
 
 SOURCES=$(wildcard $(SRC_DIR)/*.cpp)
-HEADERS=$(wildcard $(SRC_DIR)/*.h)
 OBJECTS=$(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
 EXECUTABLE=$(BIN_DIR)/main
@@ -18,7 +17,7 @@ all: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $@ $(LIBFLAGS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.h
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp 
 	$(CC) $(CFLAGS) $< -o $@ $(LIBFLAGS)
 
 clean:

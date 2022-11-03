@@ -11,9 +11,9 @@ struct CreateRect
   float init_speed_x;
   float init_speed_y;
 
-  u_int8_t red;
-  u_int8_t green;
-  u_int8_t blue;
+  int red;
+  int green;
+  int blue;
 
   float width;
   float height;

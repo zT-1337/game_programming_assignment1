@@ -1,15 +1,13 @@
 #include "game.h"
-#include <SFML/Graphics.hpp>
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include "movable_shape.h"
 
 Game::Game(const std::string & config_path)
 {
   auto config_file = openConfigFile(config_path);
   createWindowFromConfigFile(config_file);
   createFontFromConfigFile(config_file);
+  createShapeObjects(config_file);
+
+  config_file.close();
 }
 
 std::ifstream Game::openConfigFile(const std::string & config_path)
@@ -18,6 +16,7 @@ std::ifstream Game::openConfigFile(const std::string & config_path)
   if(!config_file)
   {
     std::cerr << "Unable to load file" << std::endl;
+    config_file.close();
     exit(-1);
   }
 
@@ -28,7 +27,7 @@ void Game::createWindowFromConfigFile(std::ifstream & config_file)
 {
   std::string object_type;
   config_file >> object_type;
-  checkObjectTypeIsExpected(object_type, "Window");
+  checkObjectTypeIsExpected(object_type, "Window", config_file);
 
   unsigned int window_width, window_height;
   config_file >> window_width >> window_height;
@@ -39,7 +38,7 @@ void Game::createFontFromConfigFile(std::ifstream & config_file)
 {
   std::string object_type; 
   config_file >> object_type;
-  checkObjectTypeIsExpected(object_type, "Font");
+  checkObjectTypeIsExpected(object_type, "Font", config_file);
 
   std::string font_filename;
   config_file >> font_filename;
@@ -48,23 +47,30 @@ void Game::createFontFromConfigFile(std::ifstream & config_file)
   if(!m_font->loadFromFile(font_filename))
   {
     std::cerr << "Expected font file not found" << std::endl;
+    config_file.close();
     exit(-1);
   }
 
   config_file >> m_font_size;
 
-  uint8_t red, green, blue;
+  int red, green, blue;
   config_file >> red >> green >> blue;
   m_font_color = std::make_shared<sf::Color>(red, green, blue);
 }
 
-void Game::checkObjectTypeIsExpected(const std::string & object_type, const std::string & expected_type)
+void Game::checkObjectTypeIsExpected(const std::string & object_type, const std::string & expected_type, std::ifstream & config_file)
 {
   if(object_type != expected_type)
   {
     std::cerr << "Expected " << expected_type  << " object type, but got " << object_type << std::endl;
+    config_file.close();
     exit(-1);
   }
+}
+
+void Game::createShapeObjects(std::ifstream & config_file)
+{
+  m_movable_shapes = std::make_shared<std::vector<MovableShape>>();
 }
 
 Game::~Game()
