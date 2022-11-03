@@ -1,28 +1,50 @@
 #include "movable_shape.h"
 
-MovableShape::MovableShape(const struct CreateRect & rect_data)
+MovableShape::MovableShape(const CreateRect & rect_data)
   : m_speed_x(rect_data.shape_data.init_speed_x)
   , m_speed_y(rect_data.shape_data.init_speed_y)
 {
+  initColor(rect_data.shape_data);
   initRect(rect_data);
-  initName(rect_data);
+  initName(rect_data.shape_data);
+}
+
+MovableShape::MovableShape(const CreateCircle & circle_data)
+  : m_speed_x(circle_data.shape_data.init_speed_x)
+  , m_speed_y(circle_data.shape_data.init_speed_y)
+{
+  initColor(circle_data.shape_data);
+  initCircle(circle_data);
+  initName(circle_data.shape_data);
+}
+
+void MovableShape::initColor(const CreateMovableShape & shape_data) 
+{
+  m_color = std::make_shared<sf::Color>(shape_data.red, shape_data.green, shape_data.blue);
 }
 
 void MovableShape::initRect(const CreateRect & rect_data)
 {
   m_shape = std::make_shared<sf::RectangleShape>(sf::Vector2f(rect_data.width, rect_data.height));
-  m_color = std::make_shared<sf::Color>(rect_data.shape_data.red, rect_data.shape_data.green, rect_data.shape_data.blue);
   m_shape->setFillColor(*m_color);
   m_shape->setPosition(rect_data.shape_data.init_pos_x, rect_data.shape_data.init_pos_y);
 }
 
-void MovableShape::initName(const CreateRect & rect_data)
+void MovableShape::initCircle(const CreateCircle & circle_data)
+{
+  m_shape = std::make_shared<sf::CircleShape>(circle_data.radius);
+  m_shape->setFillColor(*m_color);
+  m_shape->setPosition(circle_data.shape_data.init_pos_x, circle_data.shape_data.init_pos_y);
+}
+
+
+void MovableShape::initName(const CreateMovableShape & shape_data)
 {
   m_text = std::make_shared<sf::Text>();
-  m_text->setFont(rect_data.shape_data.font);
-  m_text->setFillColor(rect_data.shape_data.font_color);
-  m_text->setCharacterSize(rect_data.shape_data.font_size);
-  m_text->setString(rect_data.shape_data.name);
+  m_text->setFont(shape_data.font);
+  m_text->setFillColor(shape_data.font_color);
+  m_text->setCharacterSize(shape_data.font_size);
+  m_text->setString(shape_data.name);
   centerNameInsideShape();
 }
 

@@ -45,9 +45,10 @@ class MovableShape
   std::shared_ptr<sf::Color> m_color;
   std::shared_ptr<sf::Text> m_text;
 
+  void initColor(const CreateMovableShape & shape_data);
   void initRect(const CreateRect & rect_data);
-  void initCircle(const CreateRect & circle_data);
-  void initName(const CreateRect & rect_data);
+  void initCircle(const CreateCircle & circle_data);
+  void initName(const CreateMovableShape & shape_data);
   void centerNameInsideShape();
 
 public:
