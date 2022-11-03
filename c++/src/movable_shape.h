@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include <iostream>
 
 struct CreateRect
 {

@@ -23,8 +23,6 @@ void MovableShape::update()
 {
   sf::FloatRect local_bounds = m_shape->getGlobalBounds();
 
-  std::cout << local_bounds.top << " " << local_bounds.left << std::endl;
-
   if(local_bounds.top < 0 || local_bounds.top + local_bounds.height > m_world_height)
   {
     m_speed_y *= -1;
