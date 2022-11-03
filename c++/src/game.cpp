@@ -32,6 +32,7 @@ void Game::createWindowFromConfigFile(std::ifstream & config_file)
   unsigned int window_width, window_height;
   config_file >> window_width >> window_height;
   m_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(window_width, window_height), "SFML Works");
+  m_window->setFramerateLimit(60);
 }
 
 void Game::createFontFromConfigFile(std::ifstream & config_file)
