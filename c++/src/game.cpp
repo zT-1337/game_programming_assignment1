@@ -6,6 +6,13 @@
 
 Game::Game(const std::string & config_path)
 {
+  auto config_file = openConfigFile(config_path);
+  createWindowFromConfigFile(config_file);
+  createFontFromConfigFile(config_file);
+}
+
+std::ifstream Game::openConfigFile(const std::string & config_path)
+{
   std::ifstream config_file(config_path);
   if(!config_file)
   {
@@ -13,28 +20,29 @@ Game::Game(const std::string & config_path)
     exit(-1);
   }
 
+  return config_file;
+}
+
+void Game::createWindowFromConfigFile(std::ifstream & config_file)
+{
   std::string object_type;
   config_file >> object_type;
-  if(object_type != "Window")
-  {
-    std::cerr << "Expected Window object type at the beginning" << std::endl;
-    exit(-1);
-  }
+  checkObjectTypeIsExpected(object_type, "Window");
 
   unsigned int window_width, window_height;
   config_file >> window_width >> window_height;
   m_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(window_width, window_height), "SFML Works");
+}
 
-  
+void Game::createFontFromConfigFile(std::ifstream & config_file)
+{
+  std::string object_type; 
   config_file >> object_type;
-  if(object_type != "Font")
-  {
-    std::cerr << "Expected Font object type at the beginning" << std::endl;
-    exit(-1);
-  }
+  checkObjectTypeIsExpected(object_type, "Font");
 
   std::string font_filename;
   config_file >> font_filename;
+
   m_font = std::make_shared<sf::Font>();
   if(!m_font->loadFromFile(font_filename))
   {
@@ -43,9 +51,19 @@ Game::Game(const std::string & config_path)
   }
 
   config_file >> m_font_size;
-  uint8_t red, blue, green;
-  config_file >> red >> blue >> green;
-  m_font_color = std::make_shared<sf::Color>(red, blue, green);
+
+  uint8_t red, green, blue;
+  config_file >> red >> green >> blue;
+  m_font_color = std::make_shared<sf::Color>(red, green, blue);
+}
+
+void Game::checkObjectTypeIsExpected(const std::string & object_type, const std::string & expected_type)
+{
+  if(object_type != expected_type)
+  {
+    std::cerr << "Expected " << expected_type  << " object type, but got " << object_type << std::endl;
+    exit(-1);
+  }
 }
 
 Game::~Game()
