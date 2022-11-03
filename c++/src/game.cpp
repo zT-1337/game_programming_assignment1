@@ -32,7 +32,7 @@ void Game::createWindowFromConfigFile(std::ifstream & config_file)
   unsigned int window_width, window_height;
   config_file >> window_width >> window_height;
   m_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(window_width, window_height), "SFML Works");
-  m_window->setFramerateLimit(60);
+  m_window->setFramerateLimit(120);
 }
 
 void Game::createFontFromConfigFile(std::ifstream & config_file)
@@ -102,7 +102,9 @@ MovableShape Game::createRectangle(std::ifstream & config_file)
                       init_pos_x, init_pos_y, 
                       init_speed_x, init_speed_y, 
                       red, green, blue, 
-                      width, height
+                      width, height,
+                      .world_width = m_window->getSize().x,
+                      .world_height = m_window->getSize().y
                     };
 
   return MovableShape(rect);

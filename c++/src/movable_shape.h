@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <iostream>
 
 struct CreateRect
 {
@@ -17,6 +18,9 @@ struct CreateRect
 
   float width;
   float height;
+
+  unsigned int world_width;
+  unsigned int world_height;
 };
 
 class MovableShape
@@ -25,6 +29,10 @@ class MovableShape
   std::string m_name;
   float m_speed_x;
   float m_speed_y;
+
+  unsigned int m_world_width;
+  unsigned int m_world_height;
+
   std::shared_ptr<sf::Color> m_color;
 
 public:
