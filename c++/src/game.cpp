@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include "movable_shape.h"
 
 Game::Game(const std::string & config_path)
 {
@@ -78,6 +79,9 @@ void Game::loop()
   text.setString("Sample Text");
   text.setCharacterSize(m_font_size);
   text.setFillColor(*m_font_color);
+
+  CreateRect rect = { .name = "KEKL", .red = 255, .green = 255, .blue = 255, .width = 250, .height = 100, };
+  MovableShape shape(rect);
   
   while(m_window->isOpen())
   {
@@ -91,6 +95,7 @@ void Game::loop()
     }
 
     m_window->clear();
+    m_window->draw(shape.getShape());
     m_window->draw(text);
     m_window->display();
   }
