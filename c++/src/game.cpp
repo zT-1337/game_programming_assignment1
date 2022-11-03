@@ -103,8 +103,9 @@ MovableShape Game::createRectangle(std::ifstream & config_file)
                       init_speed_x, init_speed_y, 
                       red, green, blue, 
                       width, height,
-                      .world_width = m_window->getSize().x,
-                      .world_height = m_window->getSize().y
+                      .font = *m_font,
+                      .font_color = *m_font_color,
+                      .font_size = m_font_size
                     };
 
   return MovableShape(rect);
@@ -138,9 +139,7 @@ void Game::loop()
 
     for(size_t i=0; i<m_movable_shapes->size();++i)
     {
-      auto& movable_shape = (*m_movable_shapes)[i];
-      movable_shape.update();
-      m_window->draw(movable_shape.getShape());
+      (*m_movable_shapes)[i].update(*m_window);
     }
 
     m_window->draw(text);

@@ -18,25 +18,23 @@ struct CreateRect
   float width;
   float height;
 
-  unsigned int world_width;
-  unsigned int world_height;
+  sf::Font & font;
+  sf::Color & font_color;
+  unsigned int font_size;
 };
 
 class MovableShape
 {
   std::shared_ptr<sf::Shape> m_shape;
-  std::string m_name;
+
   float m_speed_x;
   float m_speed_y;
 
-  unsigned int m_world_width;
-  unsigned int m_world_height;
-
   std::shared_ptr<sf::Color> m_color;
+  std::shared_ptr<sf::Text> m_text;
 
 public:
   MovableShape(const CreateRect & rect_data);
 
-  const sf::Shape & getShape() const;
-  void update();
+  void update(sf::RenderWindow & window);
 };
