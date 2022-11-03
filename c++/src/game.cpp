@@ -117,13 +117,6 @@ Game::~Game()
 
 void Game::loop()
 {
-  
-  sf::Text text;
-  text.setFont(*m_font);
-  text.setString("Sample Text");
-  text.setCharacterSize(m_font_size);
-  text.setFillColor(*m_font_color);
-
   while(m_window->isOpen())
   {
     sf::Event event;
@@ -142,7 +135,6 @@ void Game::loop()
       (*m_movable_shapes)[i].update(*m_window);
     }
 
-    m_window->draw(text);
     m_window->display();
   }
 }

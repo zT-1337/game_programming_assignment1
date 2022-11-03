@@ -15,6 +15,15 @@ MovableShape::MovableShape(const struct CreateRect & rect_data)
   m_text->setFillColor(rect_data.font_color);
   m_text->setCharacterSize(rect_data.font_size);
   m_text->setString(rect_data.name);
+
+  sf::FloatRect shape_bounding_box = m_shape->getGlobalBounds();
+  sf::FloatRect text_bounding_box = m_text->getLocalBounds();
+  sf::Vector2f text_pos
+  (
+    shape_bounding_box.left + shape_bounding_box.width / 2 - text_bounding_box.width / 2 - text_bounding_box.left,
+    shape_bounding_box.top + shape_bounding_box.height / 2 - text_bounding_box.height / 2 - text_bounding_box.top
+  );
+  m_text->setPosition(text_pos);
 }
 
 void MovableShape::update(sf::RenderWindow & window)
@@ -33,7 +42,7 @@ void MovableShape::update(sf::RenderWindow & window)
   }
 
   m_shape->move(m_speed_x, m_speed_y);
-  m_text->setPosition(m_shape->getPosition());
+  m_text->move(m_speed_x, m_speed_y);
 
   window.draw(*m_shape);
   window.draw(*m_text);
