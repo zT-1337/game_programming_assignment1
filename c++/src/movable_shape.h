@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-struct CreateRect
+struct CreateMovableShape
 {
   std::string name;
 
@@ -17,12 +17,22 @@ struct CreateRect
   int green;
   int blue;
 
-  float width;
-  float height;
-
   sf::Font & font;
   sf::Color & font_color;
   unsigned int font_size;
+};
+
+struct CreateCircle
+{
+  CreateMovableShape shape_data;
+  float radius;
+};
+
+struct CreateRect
+{
+  CreateMovableShape shape_data;
+  float width;
+  float height;
 };
 
 class MovableShape
@@ -36,11 +46,13 @@ class MovableShape
   std::shared_ptr<sf::Text> m_text;
 
   void initRect(const CreateRect & rect_data);
+  void initCircle(const CreateRect & circle_data);
   void initName(const CreateRect & rect_data);
   void centerNameInsideShape();
 
 public:
   MovableShape(const CreateRect & rect_data);
+  MovableShape(const CreateCircle & circle_data);
 
   void update(sf::RenderWindow & window);
 };

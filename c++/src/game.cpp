@@ -98,14 +98,17 @@ MovableShape Game::createRectangle(std::ifstream & config_file)
               >> red >> green >> blue 
               >> width >> height;
 
-  CreateRect rect = { name, 
-                      init_pos_x, init_pos_y, 
-                      init_speed_x, init_speed_y, 
-                      red, green, blue, 
+  CreateRect rect = { .shape_data = 
+                      {
+                        name, 
+                        init_pos_x, init_pos_y, 
+                        init_speed_x, init_speed_y, 
+                        red, green, blue,
+                        .font = *m_font,
+                        .font_color = *m_font_color,
+                        .font_size = m_font_size
+                      }, 
                       width, height,
-                      .font = *m_font,
-                      .font_color = *m_font_color,
-                      .font_size = m_font_size
                     };
 
   return MovableShape(rect);

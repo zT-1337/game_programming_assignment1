@@ -1,8 +1,8 @@
 #include "movable_shape.h"
 
 MovableShape::MovableShape(const struct CreateRect & rect_data)
-  : m_speed_x(rect_data.init_speed_x)
-  , m_speed_y(rect_data.init_speed_y)
+  : m_speed_x(rect_data.shape_data.init_speed_x)
+  , m_speed_y(rect_data.shape_data.init_speed_y)
 {
   initRect(rect_data);
   initName(rect_data);
@@ -11,18 +11,18 @@ MovableShape::MovableShape(const struct CreateRect & rect_data)
 void MovableShape::initRect(const CreateRect & rect_data)
 {
   m_shape = std::make_shared<sf::RectangleShape>(sf::Vector2f(rect_data.width, rect_data.height));
-  m_color = std::make_shared<sf::Color>(rect_data.red, rect_data.green, rect_data.blue);
+  m_color = std::make_shared<sf::Color>(rect_data.shape_data.red, rect_data.shape_data.green, rect_data.shape_data.blue);
   m_shape->setFillColor(*m_color);
-  m_shape->setPosition(rect_data.init_pos_x, rect_data.init_pos_y);
+  m_shape->setPosition(rect_data.shape_data.init_pos_x, rect_data.shape_data.init_pos_y);
 }
 
 void MovableShape::initName(const CreateRect & rect_data)
 {
   m_text = std::make_shared<sf::Text>();
-  m_text->setFont(rect_data.font);
-  m_text->setFillColor(rect_data.font_color);
-  m_text->setCharacterSize(rect_data.font_size);
-  m_text->setString(rect_data.name);
+  m_text->setFont(rect_data.shape_data.font);
+  m_text->setFillColor(rect_data.shape_data.font_color);
+  m_text->setCharacterSize(rect_data.shape_data.font_size);
+  m_text->setString(rect_data.shape_data.name);
   centerNameInsideShape();
 }
 
