@@ -3,4 +3,4 @@ Font font.ttf 24 255 255 255
 Rectangle KEKL 10 10 1 0.5 255 0 0 250 100
 Rectangle Barbara 250 125 0.25 0.85 255 255 0 350 350
 Rectangle Armin 400 234 0.1 1 255 125 125 500 5
-Circle Thorsten 300 800 3 3 0 255 0 20
+Circle Thorsten 300 600 3 3 0 255 0 20

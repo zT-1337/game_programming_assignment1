@@ -22,6 +22,7 @@ class Game
 
   void createShapeObjects(std::ifstream & config_file);
   MovableShape createRectangle(std::ifstream & config_file);
+  MovableShape createCircle(std::ifstream & config_file);
 
 public:
 

@@ -82,6 +82,12 @@ void Game::createShapeObjects(std::ifstream & config_file)
       continue;
     }
 
+    if(object_type == "Circle")
+    {
+      m_movable_shapes->push_back(createCircle(config_file));
+      continue;
+    }
+
     std::cerr << "Unexpected object type " << object_type << std::endl;
   }
 }
@@ -112,6 +118,34 @@ MovableShape Game::createRectangle(std::ifstream & config_file)
                     };
 
   return MovableShape(rect);
+}
+
+MovableShape Game::createCircle(std::ifstream & config_file)
+{
+  std::string name;
+  float init_pos_x, init_pos_y, init_speed_x, init_speed_y, radius;
+  int red, blue, green;
+
+  config_file >> name 
+              >> init_pos_x >> init_pos_y 
+              >> init_speed_x >> init_speed_y 
+              >> red >> green >> blue 
+              >> radius;
+
+  CreateCircle circle = { .shape_data = 
+                      {
+                        name, 
+                        init_pos_x, init_pos_y, 
+                        init_speed_x, init_speed_y, 
+                        red, green, blue,
+                        .font = *m_font,
+                        .font_color = *m_font_color,
+                        .font_size = m_font_size
+                      }, 
+                      radius
+                    };
+
+  return MovableShape(circle);
 }
 
 Game::~Game()
