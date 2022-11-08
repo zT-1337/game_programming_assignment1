@@ -71,20 +71,18 @@ void Game::checkObjectTypeIsExpected(const std::string & object_type, const std:
 
 void Game::createShapeObjects(std::ifstream & config_file)
 {
-  m_movable_shapes = std::make_shared<std::vector<MovableShape>>();
-
   std::string object_type;
   while(config_file >> object_type)
   {
     if(object_type == "Rectangle")
     {
-      m_movable_shapes->push_back(createRectangle(config_file));
+      m_movable_shapes.push_back(createRectangle(config_file));
       continue;
     }
 
     if(object_type == "Circle")
     {
-      m_movable_shapes->push_back(createCircle(config_file));
+      m_movable_shapes.push_back(createCircle(config_file));
       continue;
     }
 
@@ -167,9 +165,9 @@ void Game::loop()
 
     m_window->clear();
 
-    for(size_t i=0; i<m_movable_shapes->size();++i)
+    for(size_t i=0; i<m_movable_shapes.size();++i)
     {
-      (*m_movable_shapes)[i].update(*m_window);
+      m_movable_shapes[i].update(*m_window);
     }
 
     m_window->display();

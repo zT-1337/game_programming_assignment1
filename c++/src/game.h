@@ -12,7 +12,7 @@ class Game
   unsigned int m_font_size;
   std::shared_ptr<sf::Color> m_font_color;
 
-  std::shared_ptr<std::vector<MovableShape>> m_movable_shapes;
+  std::vector<MovableShape> m_movable_shapes;
 
   std::ifstream openConfigFile(const std::string & config_path);
 
